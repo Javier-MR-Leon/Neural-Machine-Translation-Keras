@@ -64,8 +64,40 @@ def download_europarl(raw_dir):
 
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         zip_ref.extractall(raw_dir)
-        
+
     # Limpiar el archivo zip para ahorrar espacio
     os.remove(zip_path)
     
     return en_file, es_file
+
+def download_glove(embeddings_dir):
+    """
+    Descarga y extrae los embeddings GloVe 42B 300d desde la web oficial de Stanford.
+    """
+    glove_file = os.path.join(embeddings_dir, "glove.42B.300d.txt")
+    
+    if os.path.exists(glove_file):
+        print("Archivo GloVe ya existe localmente. Omitiendo descarga.")
+        return glove_file
+    
+    os.makedirs(embeddings_dir, exist_ok=True)
+    url = "http://nlp.stanford.edu/data/glove.42B.300d.zip"
+    zip_path = os.path.join(embeddings_dir, "glove.zip")
+    
+    try:
+        # Descarga
+        urllib.request.urlretrieve(url, zip_path)
+        print("\nDescarga de GloVe completada. Extrayendo archivo (casi 5 GB, paciencia)...")
+        
+        # Extracción
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(embeddings_dir)
+            
+        # Borramos el zip 
+        os.remove(zip_path)
+        print("\nExtracción completada.\n")
+    except Exception as e:
+        print(f"\nError durante la descarga de GloVe: {e}")
+        
+    return glove_file
+    
