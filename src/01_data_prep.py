@@ -47,8 +47,8 @@ def main():
     with open(os.path.join(processed_dir, 'target_tokenizer.pkl'), 'wb') as handle:
         pickle.dump(target_tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
         
-    print(f"n/Vocabulario INGLÉS: {len(source_tokenizer.word_index) + 1}")
-    print(f"n/Vocabulario ESPAÑOL: {len(target_tokenizer.word_index) + 1}")
+    print(f"\nVocabulario INGLÉS: {len(source_tokenizer.word_index) + 1}")
+    print(f"\nVocabulario ESPAÑOL: {len(target_tokenizer.word_index) + 1}")
     
     # Train/Test Split y Codificación de secuencias
     train, test = train_test_split(es_en_array, test_size=0.2, random_state=42)
