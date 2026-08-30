@@ -6,6 +6,8 @@ from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Attention, Co
 from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.callbacks import ModelCheckpoint
 
+from utils import download_glove
+
 def define_model_attention_with_glove(embedding_matrix, max_length, out_vocab_size, units=256):
     """
     Modelo Seq2Seq Avanzado con Mecanismo de Atención y pesos GloVe congelados.
@@ -40,13 +42,18 @@ def define_model_attention_with_glove(embedding_matrix, max_length, out_vocab_si
     return model
 
 def main():
-    print("=== 3. ENTRENAMIENTO: GLOVE + ATENCIÓN (SEQ2SEQ PRO) ===")
+    # ENTRENAMIENTO: GLOVE + ATENCIÓN 
     processed_dir = "../data/processed/"
-    glove_path = "../data/embeddings/glove.42B.300d-001.txt"
+    embeddings_dir = "../data/embeddings/"
     models_dir = "../models/"
     os.makedirs(models_dir, exist_ok=True)
     
-    print("[*] Cargando datos procesados...")
+    glove_path = download_glove(embeddings_dir)
+    
+    if not glove_path or not os.path.exists(glove_path):
+        print("\nNo se pudo encontrar ni descargar el archivo GloVe.")
+        return
+        
     with open(os.path.join(processed_dir, 'source_tokenizer.pkl'), 'rb') as handle:
         source_tokenizer = pickle.load(handle)
     with open(os.path.join(processed_dir, 'target_tokenizer.pkl'), 'rb') as handle:
