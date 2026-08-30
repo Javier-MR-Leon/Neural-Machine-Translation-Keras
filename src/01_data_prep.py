@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Attention, Concatenate
 
 # Fíjate que ahora importamos download_europarl
 from utils import clean_text, encode_sequences, download_europarl 
