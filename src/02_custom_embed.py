@@ -2,7 +2,7 @@ import os
 import pickle
 import numpy as np
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, LSTM, Embedding, Dense
+from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Attention, Concatenate
 from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.callbacks import ModelCheckpoint
 
