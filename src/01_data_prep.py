@@ -53,8 +53,8 @@ def main():
     # Train/Test Split y Codificación de secuencias
     train, test = train_test_split(es_en_array, test_size=0.2, random_state=42)
     
-    max_source_length = 8
-    max_target_length = 8
+    max_source_length = 30
+    max_target_length = 30
     
     trainX = encode_sequences(source_tokenizer, max_source_length, train[:, 0])
     trainY = encode_sequences(target_tokenizer, max_target_length, train[:, 1])
