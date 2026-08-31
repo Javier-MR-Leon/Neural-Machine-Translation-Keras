@@ -4,7 +4,7 @@ import numpy as np
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Attention, Concatenate
 from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
 from utils import download_glove
 
@@ -99,6 +99,8 @@ def main():
     
     filename = os.path.join(models_dir, "model_ta_en_es_glove_pro.keras")
     checkpoint = ModelCheckpoint(filename, monitor="val_loss", verbose=1, save_best_only=True, mode="min")
+
+    early_stop = EarlyStopping(monitor="val_loss", patience=4, verbose=1, restore_best_weights=True)
     
     print("[*] Iniciando entrenamiento...")
     mt_model_glove.fit(
@@ -107,7 +109,7 @@ def main():
         epochs=20, 
         batch_size=128, 
         validation_data=([testX, decoder_input_test], testY), 
-        callbacks=[checkpoint], 
+        callbacks=[checkpoint, early_stop], 
         verbose=1
     )
 
