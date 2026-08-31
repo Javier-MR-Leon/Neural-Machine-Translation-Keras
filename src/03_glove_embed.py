@@ -69,6 +69,7 @@ def main():
     
     max_length = trainX.shape[1] 
 
+    print(f"[*] Cargando archivo GloVe ({glove_path})... (Esto tomará memoria)")
     embeddings_index = {}
     try:
         with open(glove_path, 'r', encoding='utf-8') as f:
