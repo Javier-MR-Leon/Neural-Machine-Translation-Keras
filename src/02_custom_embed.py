@@ -4,7 +4,7 @@ import numpy as np
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Attention, Concatenate
 from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
 def model_Seq2Seq (in_vocab_size, embedding_vec_length, max_text_length, out_vocab_size, units):
     """
@@ -79,6 +79,8 @@ def main():
     # Configurar Checkpoint
     filename = os.path.join(models_dir, "model_ta_en_es_pro.keras")
     checkpoint = ModelCheckpoint(filename, monitor="val_loss", verbose=1, save_best_only=True, mode="min")
+
+    early_stop = EarlyStopping(monitor="val_loss", patience=4, verbose=1, restore_best_weights=True)
     
     # Pasamos las DOS entradas en formato de lista: [Inglés, Español desplazado] - Iniciamos entrenamiento
     mt_model.fit(
@@ -87,7 +89,7 @@ def main():
         epochs=50, 
         batch_size=128, 
         validation_data=([testX, decoder_input_test], testY), 
-        callbacks=[checkpoint], 
+        callbacks=[checkpoint, early_stop], 
         verbose=1
     )
     
