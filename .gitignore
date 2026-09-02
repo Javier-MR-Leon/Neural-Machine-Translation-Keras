@@ -1,0 +1,27 @@
+# Entornos virtuales
+venv/
+env/
+.env
+__pycache__/
+*.pyc
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Carpetas de datos
+data/raw/
+data/processed/
+data/embeddings/
+*.npy
+*.pkl
+*.zip
+
+# Modelos entrenados
+models/
+*.keras
+*.h5
+*.hdf5
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
